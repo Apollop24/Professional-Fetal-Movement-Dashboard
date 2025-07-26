@@ -1,0 +1,806 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤱 Enhanced Fetal Movement Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 20px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .controls-section {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 3px solid #0891b2;
+            box-shadow: 0 10px 30px rgba(8, 145, 178, 0.15);
+        }
+        
+        .controls-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .slicer-section {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #0891b2;
+        }
+        
+        .slicer-section h3 {
+            color: #0c4a6e;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            font-weight: 700;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #0891b2;
+            background: white;
+            color: #0891b2;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background: #0891b2;
+            color: white;
+        }
+        
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(8, 145, 178, 0.3);
+        }
+        
+        .date-selector {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #0891b2;
+            border-radius: 10px;
+            font-size: 16px;
+            background: white;
+        }
+        
+        .data-input-section {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #0891b2;
+        }
+        
+        .data-input-section h3 {
+            color: #0c4a6e;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            font-weight: 700;
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+        
+        .input-row input[type="date"] {
+            flex: 0 0 200px;
+            padding: 10px;
+            border: 2px solid #0891b2;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .input-row input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #0891b2;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .add-btn, .update-btn {
+            background: linear-gradient(135deg, #0891b2, #0e7490);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(8, 145, 178, 0.3);
+        }
+        
+        .add-btn:hover, .update-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(8, 145, 178, 0.4);
+        }
+        
+        .data-entries {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            background: #f9fafb;
+        }
+        
+        .entry-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .entry-item:last-child {
+            border-bottom: none;
+        }
+        
+        .delete-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-label {
+            font-size: 1.1em;
+            color: #64748b;
+            font-weight: 600;
+        }
+        
+        .chart-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .filter-info {
+            background: #dbeafe;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .filter-info h4 {
+            color: #1e40af;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .controls-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .input-row input[type="date"] {
+                flex: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤱 Enhanced Fetal Movement Dashboard</h1>
+            <p>Advanced Analysis with Date Filtering & Real-time Updates</p>
+        </div>
+        
+        <!-- Controls Section -->
+        <div class="controls-section">
+            <div class="controls-grid">
+                <!-- Date Slicing Section -->
+                <div class="slicer-section">
+                    <h3>📅 Date Filter & Slicer</h3>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" onclick="setFilterType('all')">All Data</button>
+                        <button class="filter-btn" onclick="setFilterType('daily')">Daily</button>
+                        <button class="filter-btn" onclick="setFilterType('weekly')">Weekly</button>
+                        <button class="filter-btn" onclick="setFilterType('monthly')">Monthly</button>
+                    </div>
+                    <select class="date-selector" id="dateSelector" onchange="applyDateFilter()">
+                        <option value="">Select Date Range...</option>
+                    </select>
+                </div>
+                
+                <!-- Data Input Section -->
+                <div class="data-input-section">
+                    <h3>📝 Add Movement Data</h3>
+                    <div class="input-row">
+                        <input type="date" id="movementDate" value="2025-07-26">
+                        <input type="text" id="movementTimes" placeholder="e.g., 4pm, 5:30pm, 8:15am">
+                        <button class="add-btn" onclick="addMovementEntry()">Add</button>
+                    </div>
+                    <div class="data-entries" id="dataEntries"></div>
+                    <button class="update-btn" onclick="updateDashboard()" style="width: 100%; margin-top: 15px;">
+                        🔄 Update Dashboard
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Filter Info -->
+        <div class="filter-info" id="filterInfo">
+            <h4>Current View: All Data</h4>
+            <p>Showing all movement detections across all dates</p>
+        </div>
+        
+        <!-- Statistics -->
+        <div class="stats-grid" id="statsGrid">
+            <!-- Stats will be populated by JavaScript -->
+        </div>
+        
+        <!-- Charts -->
+        <div class="chart-container">
+            <div id="timelineChart"></div>
+        </div>
+        
+        <div class="chart-container">
+            <div id="hourlyChart"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Global variables
+        let currentFilterType = 'all';
+        let currentDateFilter = null;
+        let movementData = {"2024-07-25": "4pm, 5pm, 5:56pm, 8:57pm, 9:00pm, 9:15pm, 9:22pm, 9:43pm, 10:04pm, 10:42pm, 23:05, 11:34pm", "2024-07-26": "12:41am, 12:56am, 1:35am, 6:37am, 7:20am, 7:55am, 8:05am, 1:13pm, 2:06pm, 2:28pm, 3:54pm, 4:11pm, 4:50pm, 5:17pm, 5:41pm, 5:55pm, 7:48pm"};
+        let tempMovementData = {};
+        
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            populateTempData();
+            updateDateSelector();
+            updateDashboard();
+        });
+        
+        function populateTempData() {
+            tempMovementData = JSON.parse(JSON.stringify(movementData));
+            updateDataEntries();
+        }
+        
+        function setFilterType(type) {
+            currentFilterType = type;
+            
+            // Update button states
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            updateDateSelector();
+            applyDateFilter();
+        }
+        
+        function updateDateSelector() {
+            const selector = document.getElementById('dateSelector');
+            selector.innerHTML = '<option value="">Select Date Range...</option>';
+            
+            if (currentFilterType === 'all') {
+                selector.style.display = 'none';
+                return;
+            }
+            
+            selector.style.display = 'block';
+            
+            // Get unique dates/periods from movement data
+            const periods = new Set();
+            
+            Object.keys(movementData).forEach(dateStr => {
+                const date = new Date(dateStr);
+                if (currentFilterType === 'daily') {
+                    periods.add(dateStr);
+                } else if (currentFilterType === 'weekly') {
+                    const weekStart = getWeekStart(date);
+                    periods.add(weekStart);
+                } else if (currentFilterType === 'monthly') {
+                    const month = date.toISOString().substring(0, 7);
+                    periods.add(month);
+                }
+            });
+            
+            Array.from(periods).sort().forEach(period => {
+                const option = document.createElement('option');
+                option.value = period;
+                if (currentFilterType === 'daily') {
+                    option.textContent = new Date(period).toLocaleDateString();
+                } else if (currentFilterType === 'weekly') {
+                    const weekEnd = new Date(new Date(period).getTime() + 6 * 24 * 60 * 60 * 1000);
+                    option.textContent = `Week of ${new Date(period).toLocaleDateString()} - ${weekEnd.toLocaleDateString()}`;
+                } else if (currentFilterType === 'monthly') {
+                    const date = new Date(period + '-01');
+                    option.textContent = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+                }
+                selector.appendChild(option);
+            });
+        }
+        
+        function getWeekStart(date) {
+            const d = new Date(date);
+            const day = d.getDay();
+            const diff = d.getDate() - day;
+            return new Date(d.setDate(diff)).toISOString().substring(0, 10);
+        }
+        
+        function applyDateFilter() {
+            const selector = document.getElementById('dateSelector');
+            currentDateFilter = selector.value || null;
+            
+            updateFilterInfo();
+            analyzeAndUpdateCharts();
+        }
+        
+        function updateFilterInfo() {
+            const info = document.getElementById('filterInfo');
+            let title = 'Current View: ';
+            let description = '';
+            
+            if (currentFilterType === 'all') {
+                title += 'All Data';
+                description = 'Showing all movement detections across all dates';
+            } else if (currentFilterType === 'daily' && currentDateFilter) {
+                title += 'Daily View';
+                description = `Showing movements for ${new Date(currentDateFilter).toLocaleDateString()}`;
+            } else if (currentFilterType === 'weekly' && currentDateFilter) {
+                const weekEnd = new Date(new Date(currentDateFilter).getTime() + 6 * 24 * 60 * 60 * 1000);
+                title += 'Weekly View';
+                description = `Showing movements for week of ${new Date(currentDateFilter).toLocaleDateString()} - ${weekEnd.toLocaleDateString()}`;
+            } else if (currentFilterType === 'monthly' && currentDateFilter) {
+                const date = new Date(currentDateFilter + '-01');
+                title += 'Monthly View';
+                description = `Showing movements for ${date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}`;
+            } else {
+                title += currentFilterType.charAt(0).toUpperCase() + currentFilterType.slice(1) + ' View';
+                description = 'Select a date range to filter data';
+            }
+            
+            info.innerHTML = `<h4>${title}</h4><p>${description}</p>`;
+        }
+        
+        function addMovementEntry() {
+            const date = document.getElementById('movementDate').value;
+            const times = document.getElementById('movementTimes').value.trim();
+            
+            if (!date || !times) {
+                alert('Please enter both date and movement times');
+                return;
+            }
+            
+            if (tempMovementData[date]) {
+                tempMovementData[date] += ', ' + times;
+            } else {
+                tempMovementData[date] = times;
+            }
+            
+            document.getElementById('movementTimes').value = '';
+            updateDataEntries();
+        }
+        
+        function removeMovementEntry(date) {
+            delete tempMovementData[date];
+            updateDataEntries();
+        }
+        
+        function updateDataEntries() {
+            const container = document.getElementById('dataEntries');
+            container.innerHTML = '';
+            
+            Object.entries(tempMovementData).sort().forEach(([date, times]) => {
+                const entryDiv = document.createElement('div');
+                entryDiv.className = 'entry-item';
+                entryDiv.innerHTML = `
+                    <div>
+                        <strong>${new Date(date).toLocaleDateString()}</strong><br>
+                        <small>${times}</small>
+                    </div>
+                    <button class="delete-btn" onclick="removeMovementEntry('${date}')">Delete</button>
+                `;
+                container.appendChild(entryDiv);
+            });
+        }
+        
+        function updateDashboard() {
+            // Save temp data to main data
+            movementData = JSON.parse(JSON.stringify(tempMovementData));
+            
+            // Save to server/file (simulated)
+            saveMovementData();
+            
+            // Update selectors and charts
+            updateDateSelector();
+            analyzeAndUpdateCharts();
+            
+            alert('Dashboard updated successfully!');
+        }
+        
+        function saveMovementData() {
+            // This would normally send data to server
+            // For now, we'll use localStorage as a simulation
+            localStorage.setItem('fetalMovementData', JSON.stringify(movementData));
+            console.log('Movement data saved:', movementData);
+        }
+        
+        function analyzeAndUpdateCharts() {
+            // Filter data based on current settings
+            let filteredData = {};
+            
+            if (currentFilterType === 'all') {
+                filteredData = movementData;
+            } else if (currentDateFilter) {
+                Object.entries(movementData).forEach(([date, times]) => {
+                    const entryDate = new Date(date);
+                    let include = false;
+                    
+                    if (currentFilterType === 'daily' && date === currentDateFilter) {
+                        include = true;
+                    } else if (currentFilterType === 'weekly') {
+                        const weekStart = getWeekStart(entryDate);
+                        if (weekStart === currentDateFilter) include = true;
+                    } else if (currentFilterType === 'monthly') {
+                        const month = entryDate.toISOString().substring(0, 7);
+                        if (month === currentDateFilter) include = true;
+                    }
+                    
+                    if (include) filteredData[date] = times;
+                });
+            }
+            
+            // Convert to movements array for analysis
+            const movements = [];
+            Object.entries(filteredData).forEach(([date, timesStr]) => {
+                if (timesStr && timesStr.trim()) {
+                    const times = timesStr.split(',').map(t => t.trim()).filter(t => t);
+                    times.forEach(timeStr => {
+                        const datetime = parseTimeWithDate(timeStr, date);
+                        if (datetime) {
+                            movements.push({
+                                original_time: timeStr,
+                                date: date,
+                                datetime: datetime,
+                                hour: datetime.getHours(),
+                                minute: datetime.getMinutes(),
+                                hour_decimal: datetime.getHours() + datetime.getMinutes() / 60
+                            });
+                        }
+                    });
+                }
+            });
+            
+            movements.sort((a, b) => a.datetime - b.datetime);
+            
+            // Calculate statistics
+            const stats = calculateStats(movements);
+            
+            // Update UI
+            updateStatsGrid(stats);
+            updateCharts(movements);
+        }
+        
+        function parseTimeWithDate(timeStr, dateStr) {
+            try {
+                const date = new Date(dateStr);
+                timeStr = timeStr.trim().replace('*', '');
+                
+                let hour, minute;
+                
+                if (timeStr.toLowerCase().includes('pm') || timeStr.toLowerCase().includes('am')) {
+                    const cleanTime = timeStr.toLowerCase().replace('pm', '').replace('am', '').trim();
+                    const isPm = timeStr.toLowerCase().includes('pm');
+                    
+                    if (cleanTime.includes(':')) {
+                        [hour, minute] = cleanTime.split(':').map(Number);
+                    } else {
+                        hour = parseInt(cleanTime);
+                        minute = 0;
+                    }
+                    
+                    if (isPm && hour !== 12) hour += 12;
+                    else if (!isPm && hour === 12) hour = 0;
+                } else {
+                    if (timeStr.includes(':')) {
+                        [hour, minute] = timeStr.split(':').map(Number);
+                    } else {
+                        hour = parseInt(timeStr);
+                        minute = 0;
+                    }
+                }
+                
+                return new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour, minute);
+            } catch (e) {
+                console.error('Error parsing time:', timeStr, 'with date:', dateStr, e);
+                return null;
+            }
+        }
+        
+        function calculateStats(movements) {
+            if (movements.length === 0) {
+                return {
+                    total_detections: 0,
+                    avg_interval: 0,
+                    max_interval: 0,
+                    compliance: 'No Data',
+                    hourly_counts: new Array(24).fill(0),
+                    morning_movements: 0,
+                    afternoon_movements: 0,
+                    evening_movements: 0,
+                    night_movements: 0
+                };
+            }
+            
+            // Calculate intervals
+            const intervals = [];
+            for (let i = 1; i < movements.length; i++) {
+                const intervalMs = movements[i].datetime - movements[i-1].datetime;
+                const intervalMin = intervalMs / (1000 * 60);
+                intervals.push(intervalMin);
+            }
+            
+            const avgInterval = intervals.length > 0 ? intervals.reduce((a, b) => a + b, 0) / intervals.length : 0;
+            const maxInterval = intervals.length > 0 ? Math.max(...intervals) : 0;
+            
+            // Calculate compliance
+            let compliance = 'No Data';
+            if (intervals.length > 0) {
+                const concernIntervals = intervals.filter(i => i > 120).length;
+                if (concernIntervals === 0 && maxInterval <= 120) compliance = 'Excellent';
+                else if (concernIntervals === 0) compliance = 'Good';
+                else if (concernIntervals <= 2) compliance = 'Monitor';
+                else compliance = 'Attention Needed';
+            }
+            
+            // Calculate hourly distribution
+            const hourly_counts = new Array(24).fill(0);
+            movements.forEach(m => hourly_counts[m.hour]++);
+            
+            // Calculate period distributions
+            const morning_movements = movements.filter(m => m.hour >= 6 && m.hour < 12).length;
+            const afternoon_movements = movements.filter(m => m.hour >= 12 && m.hour < 18).length;
+            const evening_movements = movements.filter(m => m.hour >= 18 && m.hour < 24).length;
+            const night_movements = movements.filter(m => m.hour >= 0 && m.hour < 6).length;
+            
+            return {
+                total_detections: movements.length,
+                avg_interval: Math.round(avgInterval * 10) / 10,
+                max_interval: Math.round(maxInterval),
+                compliance: compliance,
+                hourly_counts: hourly_counts,
+                morning_movements: morning_movements,
+                afternoon_movements: afternoon_movements,
+                evening_movements: evening_movements,
+                night_movements: night_movements
+            };
+        }
+        
+        function updateStatsGrid(stats) {
+            const grid = document.getElementById('statsGrid');
+            grid.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${stats.total_detections}</div>
+                    <div class="stat-label">Total Detections</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.avg_interval} min</div>
+                    <div class="stat-label">Average Interval</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.max_interval} min</div>
+                    <div class="stat-label">Maximum Gap</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.compliance}</div>
+                    <div class="stat-label">Compliance Status</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.morning_movements}</div>
+                    <div class="stat-label">Morning (6AM-12PM)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.afternoon_movements}</div>
+                    <div class="stat-label">Afternoon (12PM-6PM)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.evening_movements}</div>
+                    <div class="stat-label">Evening (6PM-12AM)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.night_movements}</div>
+                    <div class="stat-label">Night (12AM-6AM)</div>
+                </div>
+            `;
+        }
+        
+        function updateCharts(movements) {
+            // Timeline Chart
+            const timelineData = {
+                data: [{
+                    x: movements.map(m => m.hour_decimal),
+                    y: movements.map(() => 1),
+                    mode: 'lines+markers',
+                    type: 'scatter',
+                    line: { color: 'rgba(139, 92, 246, 0.8)', width: 4 },
+                    marker: { 
+                        size: 12, 
+                        color: movements.map((_, i) => `hsl(${240 + i*10}, 70%, 60%)`),
+                        line: { width: 2, color: 'rgba(255, 255, 255, 0.8)' }
+                    },
+                    name: 'Movement Detections',
+                    hovertemplate: '<b>Detection</b><br>Time: %{customdata.0}<br>Date: %{customdata.1}<br><extra></extra>',
+                    customdata: movements.map(m => [
+                        `${m.hour.toString().padStart(2, '0')}:${m.minute.toString().padStart(2, '0')}`,
+                        m.date
+                    ])
+                }],
+                layout: {
+                    title: { text: '🕐 24-Hour Movement Timeline', font: { size: 24, color: '#6366f1' }, x: 0.5 },
+                    xaxis: { 
+                        title: 'Hour of Day', 
+                        tickmode: 'linear', 
+                        tick0: 0, 
+                        dtick: 2,
+                        ticktext: Array.from({ length: 12 }, (_, i) => `${(i*2).toString().padStart(2, '0')}:00`),
+                        tickvals: Array.from({ length: 12 }, (_, i) => i*2),
+                        range: [-0.5, 23.5]
+                    },
+                    yaxis: { title: 'Movements', showticklabels: false, range: [0.5, 1.5] },
+                    height: 400,
+                    plot_bgcolor: 'rgba(248, 250, 252, 0.8)',
+                    paper_bgcolor: 'rgba(139, 92, 246, 0.05)'
+                }
+            };
+            
+            // Hourly Chart
+            const hours = Array.from({ length: 24 }, (_, i) => i);
+            const hourlyCounts = hours.map(h => movements.filter(m => m.hour === h).length);
+            const colors = hourlyCounts.map(c => 
+                c === 0 ? '#ef4444' : c <= 2 ? '#f59e0b' : c <= 4 ? '#10b981' : '#3b82f6'
+            );
+            
+            const hourlyData = {
+                data: [{
+                    x: hours.map(h => `${h.toString().padStart(2, '0')}:00`),
+                    y: hourlyCounts,
+                    type: 'bar',
+                    marker: { color: colors, opacity: 0.9 },
+                    hovertemplate: '<b>%{x}</b><br>Detections: %{y}<br><extra></extra>'
+                }],
+                layout: {
+                    title: { text: '📊 Hourly Distribution', font: { size: 24, color: '#047857' }, x: 0.5 },
+                    xaxis: { title: 'Hour of Day', tickangle: 45 },
+                    yaxis: { title: 'Count' },
+                    height: 450,
+                    plot_bgcolor: 'rgba(240, 253, 244, 0.8)',
+                    paper_bgcolor: 'rgba(16, 185, 129, 0.05)'
+                }
+            };
+            
+            // Render charts
+            const config = { responsive: true, displayModeBar: true, displaylogo: false };
+            Plotly.react('timelineChart', timelineData.data, timelineData.layout, config);
+            Plotly.react('hourlyChart', hourlyData.data, hourlyData.layout, config);
+        }
+        
+        // Load saved data on page load
+        window.addEventListener('load', function() {
+            const savedData = localStorage.getItem('fetalMovementData');
+            if (savedData) {
+                try {
+                    const parsed = JSON.parse(savedData);
+                    movementData = parsed;
+                    tempMovementData = JSON.parse(JSON.stringify(parsed));
+                    updateDataEntries();
+                    updateDateSelector();
+                    analyzeAndUpdateCharts();
+                } catch (e) {
+                    console.error('Error loading saved data:', e);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
