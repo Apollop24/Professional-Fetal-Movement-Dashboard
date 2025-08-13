@@ -75,12 +75,11 @@ quick_update("8:30am, 9:15am, 10:45am, 12:30pm")
 ## 📈 **Dashboard Components**
 
 ### 1. **Daily Movement Pattern Summary**
-```
+
 <img width="1771" height="671" alt="image" src="https://github.com/user-attachments/assets/f39877b7-dc9b-4c55-a3b4-2f31376d9073" />
 <img width="1760" height="390" alt="image" src="https://github.com/user-attachments/assets/e705e442-72c2-4e4b-888e-1d2eabce2b4b" />
 
 
-```
 **Purpose**: Provides a comprehensive overview of fetal activity distribution across four key time periods, helping identify natural circadian patterns and peak activity windows.
 
 **Medical Value**: 
