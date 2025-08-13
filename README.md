@@ -88,13 +88,8 @@ quick_update("8:30am, 9:15am, 10:45am, 12:30pm")
 - Helps establish baseline activity levels
 
 ### 2. **24-Hour Movement Detection Timeline**
-```
-🕐 Interactive Timeline Visualization
-├── Gradient line showing movement progression
-├── Color-coded markers for each detection
-├── Time period backgrounds (Night/Morning/Afternoon/Evening)
-└── Hover tooltips with detailed information
-```
+<img width="1722" height="682" alt="image" src="https://github.com/user-attachments/assets/248d49dd-5144-4845-833b-7c1507d4c663" />
+
 **Analytics Logic**:
 - **Time Parsing Algorithm**: Converts various time formats to standardized datetime objects
 - **Gradient Visualization**: Uses HSL color mapping for chronological progression
@@ -106,13 +101,8 @@ quick_update("8:30am, 9:15am, 10:45am, 12:30pm")
 - Quick assessment of monitoring consistency
 
 ### 3. **Hourly Movement Detection Distribution**
-```
-📊 Bar Chart Analysis (24-hour breakdown)
-├── Red bars: No activity (0 detections)
-├── Yellow bars: Low activity (1-2 detections)  
-├── Green bars: Normal activity (3-4 detections)
-└── Blue bars: High activity (5+ detections)
-```
+<img width="1727" height="791" alt="image" src="https://github.com/user-attachments/assets/cfd8cdfb-f87b-48e4-b0d2-8750457614ac" />
+
 **Statistical Processing**:
 - **Frequency Analysis**: Counts detections per hour bin
 - **Color Classification**: Automated activity level assessment
@@ -124,13 +114,8 @@ quick_update("8:30am, 9:15am, 10:45am, 12:30pm")
 - Optimizes monitoring schedules
 
 ### 4. **Movement Pattern Analysis**
-```
-🎯 Scatter Plot Visualization
-├── X-axis: Hour of day (0-23)
-├── Y-axis: Minutes within hour (0-59)
-├── Marker size: Increases with detection sequence
-└── Color scale: Viridis colormap by hour
-```
+<img width="1759" height="787" alt="image" src="https://github.com/user-attachments/assets/37ca7276-3987-4e99-aa78-757a3cb5dfcc" />
+
 **Advanced Analytics**:
 - **Temporal Clustering**: Identifies movement concentration zones
 - **Sequential Analysis**: Shows progression through detection sequence
@@ -142,16 +127,8 @@ quick_update("8:30am, 9:15am, 10:45am, 12:30pm")
 - Assists in personalized care planning
 
 ### 5. **Movement Intervals & Safety Analysis**
-```
-⏱️ Line Chart with Safety Thresholds
-├── Data points: Time intervals between detections
-├── Green markers: Normal intervals (<60 min)
-├── Orange markers: Monitor intervals (60-120 min)
-├── Red markers: Concern intervals (>120 min)
-├── Safety Lines:
-│   ├── Orange dashed: Monitor threshold (60 min)
-│   └── Red dashed: Alert threshold (120 min)
-```
+<img width="1769" height="784" alt="image" src="https://github.com/user-attachments/assets/0123475c-a1b6-401d-a16a-9cda03239dec" />
+
 **Safety Algorithm**:
 ```python
 def classify_interval(minutes):
@@ -165,16 +142,8 @@ def classify_interval(minutes):
 - Real-time safety alerts
 
 ### 6. **Movement Intervals Analysis Table**
-```
-📋 Detailed Interval Breakdown
-┌──────────────────────────────────────────────────────┐
-│ From    │ To      │ Interval (min) │ Status          │
-├──────────────────────────────────────────────────────┤
-│ 16:00   │ 17:00   │ 60            │ 🟡 Monitor      │
-│ 17:00   │ 17:56   │ 56            │ 🟢 Normal       │
-│ 17:56   │ 20:57   │ 181           │ 🔴 Concern      │
-└──────────────────────────────────────────────────────┘
-```
+<img width="1726" height="868" alt="image" src="https://github.com/user-attachments/assets/4d0db6ae-3f04-4ff1-8d27-bbedad1e8989" />
+
 **Data Processing Logic**:
 - **Interval Calculation**: `(current_time - previous_time).total_seconds() / 60`
 - **Day Rollover Handling**: Adds 24*60 minutes for negative intervals
@@ -187,20 +156,8 @@ def classify_interval(minutes):
 - Trend analysis capabilities
 
 ### 7. **Clinical Recommendations & Analysis**
-```
-🏥 Two-Column Medical Assessment
-├── Current Analysis:
-│   ├── Total movement detections
-│   ├── Active monitoring hours  
-│   ├── Interval classifications
-│   ├── Overall assessment
-│   └── Peak activity identification
-└── Medical Guidelines:
-    ├── Standard monitoring protocols
-    ├── Safety thresholds
-    ├── Contact recommendations
-    └── Best practices
-```
+<img width="1797" height="766" alt="image" src="https://github.com/user-attachments/assets/268a45c0-64f4-4b38-9991-0f98fc92260a" />
+
 **Clinical Decision Support**:
 - **Compliance Scoring Algorithm**:
   ```python
@@ -314,25 +271,7 @@ MONITOR_THRESHOLD = 120    # minutes
 ALERT_THRESHOLD = 180      # minutes (if needed)
 ```
 
----
 
-## 📊 **Sample Output Analysis**
-
-### **Statistical Summary Example**
-```
-📊 Comprehensive Analysis Summary:
-   • Total movement detections: 29
-   • Average interval: 45.2 minutes
-   • Maximum gap: 181 minutes
-   • Minimum gap: 3 minutes
-   • Normal intervals: 22
-   • Monitor intervals: 5
-   • Concerning intervals: 2
-   • Compliance status: Monitor
-   • Active hours: 18
-   • Peak activity: Evening
-   • Generated at: 2024-08-13 14:30:25
-```
 
 ### **Clinical Interpretation**
 - **✅ Excellent**: All intervals <120min, consistent monitoring
@@ -534,9 +473,9 @@ We welcome contributions from healthcare providers, developers, and medical rese
 
 ### **Contribution Process**
 1. Fork the repository
-2. Create feature branch (`git checkout -b feature/medical-enhancement`)
-3. Commit changes (`git commit -am 'Add clinical recommendation engine'`)
-4. Push to branch (`git push origin feature/medical-enhancement`)
+2. Create a feature branch 
+3. Commit changes 
+4. Push to branch 
 5. Create Pull Request with detailed description
 
 ---
@@ -552,21 +491,13 @@ This software is designed to assist with fetal movement monitoring and analysis 
 
 ## 🌟 **Acknowledgments**
 
-- **Medical Consultants**: Dr. Jane Smith, MD (Maternal-Fetal Medicine)
 - **Technical Advisors**: Healthcare IT professionals and data scientists
 - **Beta Testers**: Expectant mothers and healthcare providers worldwide
 - **Open Source Libraries**: Plotly, Pandas, NumPy development teams
 
 ---
 
-## 📞 **Support & Contact**
 
-- **GitHub Issues**: [Report bugs and feature requests](https://github.com/yourusername/fetal-movement-dashboard/issues)
-- **Medical Questions**: Consult your healthcare provider
-- **Technical Support**: [Create support ticket](https://github.com/yourusername/fetal-movement-dashboard/discussions)
-- **Documentation**: [Wiki and guides](https://github.com/yourusername/fetal-movement-dashboard/wiki)
-
----
 
 <div align="center">
 
