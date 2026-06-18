@@ -1,4 +1,4 @@
-# 🤱 Professional Fetal Movement Dashboard
+#  Professional Fetal Movement Dashboard
 
 [![Python](https://img.shields.io/badge/Python-3.7%2B-blue.svg)](https://www.python.org/)
 [![Plotly](https://img.shields.io/badge/Plotly-Latest-orange.svg)](https://plotly.com/)
@@ -10,11 +10,11 @@
 
 ---
 
-## 🎯 **Overview**
+##  **Overview**
 
 The **Professional Fetal Movement Dashboard** is a comprehensive Python-based medical analytics tool designed to monitor, analyze, and visualize fetal movement patterns. This advanced system transforms raw movement detection data into actionable medical insights through sophisticated statistical analysis and beautiful interactive visualizations.
 
-### 🏥 **Medical Significance**
+###  **Medical Significance**
 Fetal movement monitoring is a critical aspect of prenatal care, helping to:
 - **Assess fetal well-being** and detect potential complications early
 - **Monitor movement patterns** and identify concerning changes
@@ -23,15 +23,15 @@ Fetal movement monitoring is a critical aspect of prenatal care, helping to:
 
 ---
 
-## ✨ **Key Features**
+##  **Key Features**
 
-### 📊 **Core Analytics Engine**
+###  **Core Analytics Engine**
 - **Multi-format Time Parsing**: Supports 12-hour (4pm, 5:30am) and 24-hour (14:30, 23:45) formats
 - **Advanced Statistical Analysis**: Mean intervals, maximum gaps, compliance scoring
 - **Medical Guidelines Compliance**: Automated assessment based on clinical standards
 - **Pattern Recognition**: Identifies peak activity periods and movement distribution
 
-### 🎨 **Professional Visualizations**
+###  **Professional Visualizations**
 - **Interactive Plotly Charts**: Responsive, publication-ready graphics
 - **Real-time Dashboard**: HTML-based with modern CSS styling
 - **Mobile-Responsive Design**: Optimized for all devices
@@ -45,7 +45,7 @@ Fetal movement monitoring is a critical aspect of prenatal care, helping to:
 
 ---
 
-## 🚀 **Quick Start**
+##  **Quick Start**
 
 ### Prerequisites
 ```bash
@@ -72,7 +72,7 @@ quick_update("8:30am, 9:15am, 10:45am, 12:30pm")
 
 ---
 
-## 📈 **Dashboard Components**
+##  **Dashboard Components**
 
 ### 1. **Daily Movement Pattern Summary**
 
@@ -175,7 +175,7 @@ def classify_interval(minutes):
 
 ---
 
-## 🧮 **Technical Architecture**
+##  **Technical Architecture**
 
 ### **Class Structure**
 ```python
@@ -226,7 +226,7 @@ def parse_time(self, time_str):
 
 ---
 
-## 📁 **File Structure**
+##  **File Structure**
 ```
 fetal-movement-dashboard/
 ├── fetal_movement_analyzer.py    # Main application
@@ -242,7 +242,7 @@ fetal-movement-dashboard/
 
 ---
 
-## ⚙️ **Configuration & Customization**
+##  **Configuration & Customization**
 
 ### **Data Input Formats**
 ```python
@@ -281,7 +281,7 @@ ALERT_THRESHOLD = 180      # minutes (if needed)
 
 ---
 
-## 🔧 **Installation & Setup**
+##  **Installation & Setup**
 
 ### **Step 1: Dependencies**
 ```bash
@@ -312,7 +312,7 @@ python fetal_movement_analyzer.py
 
 ---
 
-## 🎯 **Use Cases**
+##  **Use Cases**
 
 ### **For Expectant Mothers**
 - **Daily Monitoring**: Track fetal movements with professional-grade analysis
@@ -334,7 +334,7 @@ python fetal_movement_analyzer.py
 
 ---
 
-## 🔬 **Medical Standards Compliance**
+##  **Medical Standards Compliance**
 
 ### **Clinical Guidelines Integration**
 - **ACOG Recommendations**: Follows American College of Obstetricians and Gynecologists standards
@@ -350,7 +350,7 @@ python fetal_movement_analyzer.py
 
 ---
 
-## 📈 **Advanced Analytics**
+##  **Advanced Analytics**
 
 ### **Pattern Recognition Algorithms**
 ```python
@@ -372,7 +372,7 @@ movement_velocity = d(movements)/d(time)
 
 ---
 
-## 🎨 **Visual Design System**
+##  **Visual Design System**
 
 ### **Color Palette**
 ```css
@@ -407,7 +407,7 @@ body: 14px, Segoe UI, readable contrast
 
 ---
 
-## 🚀 **Performance Optimization**
+##  **Performance Optimization**
 
 ### **Efficient Data Processing**
 - **Vectorized Operations**: Pandas and NumPy optimization
@@ -423,7 +423,7 @@ body: 14px, Segoe UI, readable contrast
 
 ---
 
-## 🛠️ **Troubleshooting**
+##  **Troubleshooting**
 
 ### **Common Issues & Solutions**
 
@@ -451,7 +451,7 @@ TARGET_FOLDER = "."  # Current directory fallback
 
 ---
 
-## 📚 **Medical References**
+##  **Medical References**
 
 1. **ACOG Practice Bulletin**: Antepartum Fetal Surveillance
 2. **Cochrane Reviews**: Fetal movement counting for assessment of fetal wellbeing
@@ -460,7 +460,7 @@ TARGET_FOLDER = "."  # Current directory fallback
 
 ---
 
-## 🤝 **Contributing**
+##  **Contributing**
 
 We welcome contributions from healthcare providers, developers, and medical researchers!
 
@@ -480,7 +480,7 @@ We welcome contributions from healthcare providers, developers, and medical rese
 
 ---
 
-## 📄 **License**
+##  **License**
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
@@ -489,7 +489,7 @@ This software is designed to assist with fetal movement monitoring and analysis 
 
 ---
 
-## 🌟 **Acknowledgments**
+##  **Acknowledgments**
 
 - **Technical Advisors**: Healthcare IT professionals and data scientists
 - **Beta Testers**: Expectant mothers and healthcare providers worldwide
@@ -503,8 +503,8 @@ This software is designed to assist with fetal movement monitoring and analysis 
 
 **Made with ❤️ for maternal and fetal health**
 
-[![GitHub stars](https://img.shields.io/github/stars/yourusername/fetal-movement-dashboard.svg?style=social&label=Star)](https://github.com/yourusername/fetal-movement-dashboard)
-[![GitHub forks](https://img.shields.io/github/forks/yourusername/fetal-movement-dashboard.svg?style=social&label=Fork)](https://github.com/yourusername/fetal-movement-dashboard)
-[![GitHub watchers](https://img.shields.io/github/watchers/yourusername/fetal-movement-dashboard.svg?style=social&label=Watch)](https://github.com/yourusername/fetal-movement-dashboard)
+[![GitHub stars](https://img.shields.io/github/stars/Apollop24/fetal-movement-dashboard.svg?style=social&label=Star)](https://github.com/Apollop24/fetal-movement-dashboard)
+[![GitHub forks](https://img.shields.io/github/forks/Apollop24/fetal-movement-dashboard.svg?style=social&label=Fork)](https://github.com/Apollop24/fetal-movement-dashboard)
+[![GitHub watchers](https://img.shields.io/github/watchers/Apollop24/fetal-movement-dashboard.svg?style=social&label=Watch)](https://github.com/Apollop24/fetal-movement-dashboard)
 
 </div>
