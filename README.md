@@ -503,8 +503,8 @@ This software is designed to assist with fetal movement monitoring and analysis 
 
 **Made with ❤️ for maternal and fetal health**
 
-[![GitHub stars](https://img.shields.io/github/stars/Apollop24/fetal-movement-dashboard.svg?style=social&label=Star)](https://github.com/Apollop24/fetal-movement-dashboard)
-[![GitHub forks](https://img.shields.io/github/forks/Apollop24/fetal-movement-dashboard.svg?style=social&label=Fork)](https://github.com/Apollop24/fetal-movement-dashboard)
-[![GitHub watchers](https://img.shields.io/github/watchers/Apollop24/fetal-movement-dashboard.svg?style=social&label=Watch)](https://github.com/Apollop24/fetal-movement-dashboard)
+[![GitHub stars](https://img.shields.io/github/stars/Apollop24/Professional-Fetal-Movement-Dashboard.svg?style=social&label=Star)](https://github.com/Apollop24/Professional-Fetal-Movement-Dashboard)
+[![GitHub forks](https://img.shields.io/github/forks/Apollop24/Professional-Fetal-Movement-Dashboard.svg?style=social&label=Fork)](https://github.com/Apollop24/Professional-Fetal-Movement-Dashboard)
+[![GitHub watchers](https://img.shields.io/github/watchers/Apollop24/Professional-Fetal-Movement-Dashboard.svg?style=social&label=Watch)](https://github.com/Apollop24/Professional-Fetal-Movement-Dashboard)
 
 </div>
